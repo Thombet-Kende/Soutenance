@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "32420123781",
+    "project_id": "reseau-social-d4a14",
+    "storage_bucket": "reseau-social-d4a14.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:32420123781:android:43f3c97f8a4a37589985ec",
+        "android_client_info": {
+          "package_name": "com.example.projet_soutenance"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDE4egeFYcD0P0dAT6udC83U8SvDuk1adI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

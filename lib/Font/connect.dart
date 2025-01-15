@@ -7,58 +7,37 @@ void main() {
   ));
 }
 
-class FadeAnimation extends StatefulWidget {
-  final Duration duration;
-  final Widget child;
-
-  const FadeAnimation({required this.duration, required this.child, Key? key})
-      : super(key: key);
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  _FadeAnimationState createState() => _FadeAnimationState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _FadeAnimationState extends State<FadeAnimation>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
+class _LoginPageState extends State<LoginPage> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  String _loginMessage = "";
 
-  @override
-  void initState() {
-    super.initState();
-
-    _controller = AnimationController(
-      vsync: this,
-      duration: widget.duration,
-    );
-
-    _animation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeInOut,
-      ),
-    );
-
-    _controller.forward();
+  void _handleLogin() {
+    setState(() {
+      if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
+        _loginMessage = "Veuillez remplir tous les champs.";
+      } else if (_emailController.text == "admin@example.com" &&
+          _passwordController.text == "admin123") {
+        _loginMessage = "Connexion réussie !";
+      } else {
+        _loginMessage = "Email ou mot de passe incorrect.";
+      }
+    });
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity: _animation,
-      child: widget.child,
-    );
-  }
-}
-
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -81,13 +60,10 @@ class LoginPage extends StatelessWidget {
                     left: 30,
                     width: 80,
                     height: 200,
-                    child: FadeAnimation(
-                      duration: const Duration(seconds: 1),
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('assets/images/light-1.png'),
-                          ),
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/light-1.png'),
                         ),
                       ),
                     ),
@@ -96,46 +72,37 @@ class LoginPage extends StatelessWidget {
                     left: 140,
                     width: 80,
                     height: 150,
-                    child: FadeAnimation(
-                      duration: const Duration(milliseconds: 1200),
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('assets/images/light-2.png'),
-                          ),
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/light-2.png'),
                         ),
                       ),
                     ),
                   ),
                   Positioned(
                     right: 40,
-                    top: 40,
-                    width: 80,
+                    top: 50,
+                    width: 90,
                     height: 150,
-                    child: FadeAnimation(
-                      duration: const Duration(milliseconds: 1300),
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('assets/images/clock.png'),
-                          ),
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/clock.png'),
                         ),
                       ),
                     ),
                   ),
                   Positioned(
-                    child: FadeAnimation(
-                      duration: const Duration(milliseconds: 1600),
-                      child: Container(
-                        margin: const EdgeInsets.only(top: 50),
-                        child: const Center(
-                          child: Text(
-                            "Login",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 40,
-                              fontWeight: FontWeight.bold,
-                            ),
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 60),
+                      child: const Center(
+                        child: Text(
+                          "Connection",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 50,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
@@ -148,61 +115,60 @@ class LoginPage extends StatelessWidget {
               padding: const EdgeInsets.all(30.0),
               child: Column(
                 children: <Widget>[
-                  FadeAnimation(
-                    duration: const Duration(milliseconds: 1800),
-                    child: Container(
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          color: const Color.fromRGBO(143, 148, 251, 1),
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color.fromRGBO(143, 148, 251, .2),
-                            blurRadius: 20.0,
-                            offset: const Offset(0, 10),
-                          )
-                        ],
+                  Container(
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: const Color.fromRGBO(143, 148, 251, 1),
                       ),
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            padding: const EdgeInsets.all(8.0),
-                            decoration: const BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(
-                                  color: Color.fromRGBO(143, 148, 251, 1),
-                                ),
-                              ),
-                            ),
-                            child: TextField(
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: "Email or Phone number",
-                                hintStyle: TextStyle(color: Colors.grey[700]),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color.fromRGBO(143, 148, 251, .2),
+                          blurRadius: 20.0,
+                          offset: const Offset(0, 10),
+                        )
+                      ],
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          padding: const EdgeInsets.all(8.0),
+                          decoration: const BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: Color.fromRGBO(143, 148, 251, 1),
                               ),
                             ),
                           ),
-                          Container(
-                            padding: const EdgeInsets.all(8.0),
-                            child: TextField(
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: "Password",
-                                hintStyle: TextStyle(color: Colors.grey[700]),
-                              ),
+                          child: TextField(
+                            controller: _emailController,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Email",
+                              hintStyle: TextStyle(color: Colors.grey[700]),
                             ),
-                          )
-                        ],
-                      ),
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextField(
+                            controller: _passwordController,
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Mot de passe",
+                              hintStyle: TextStyle(color: Colors.grey[700]),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
                   const SizedBox(height: 30),
-                  FadeAnimation(
-                    duration: const Duration(milliseconds: 1900),
+                  GestureDetector(
+                    onTap: _handleLogin,
                     child: Container(
                       height: 50,
                       decoration: BoxDecoration(
@@ -216,7 +182,7 @@ class LoginPage extends StatelessWidget {
                       ),
                       child: const Center(
                         child: Text(
-                          "Login",
+                          "Connexion",
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -225,14 +191,20 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 20),
+                  Text(
+                    _loginMessage,
+                    style: TextStyle(
+                      color: _loginMessage == "Connexion réussie !"
+                          ? Colors.green
+                          : Colors.red,
+                    ),
+                  ),
                   const SizedBox(height: 70),
-                  FadeAnimation(
-                    duration: const Duration(milliseconds: 2000),
-                    child: const Text(
-                      "Forgot Password?",
-                      style: TextStyle(
-                        color: Color.fromRGBO(143, 148, 251, 1),
-                      ),
+                  const Text(
+                    "Forgot Password?",
+                    style: TextStyle(
+                      color: Color.fromRGBO(143, 148, 251, 1),
                     ),
                   ),
                 ],
